@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WriteSomething</string>
+    <string name="title_home">Wall</string>
+    <string name="title_members">Members</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_editnotes">MyStuff</string>
+</resources>
