@@ -1,7 +1,6 @@
 package com.thelegendofawizard.writesomething.ui.home
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.thelegendofawizard.writesomething.MyNote
@@ -10,7 +9,7 @@ import com.thelegendofawizard.writesomething.Repository
 class HomeViewModel(val application: Application, val repository: Repository) : ViewModel() {
 
     //val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
-    val myName = repository.getFirebaseAuthInstance().currentUser?.displayName.toString()
+    val myName = repository.currentUser()?.displayName.toString()
     val notesList = MutableLiveData<List<MyNote>>()
 
     init {

@@ -47,8 +47,6 @@ class UserProfileFragment : Fragment(),KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
         viewModel.tempPersonDetail.observe(this, Observer {
             viewModel.name.value = it.name
             viewModel.email.value = it.email

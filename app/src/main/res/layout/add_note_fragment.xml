@@ -61,6 +61,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="10dp"
+            android:fontFamily="serif"
             android:hint="Title"
             android:text="@={viewmodel.title}"
             android:textSize="24sp"
@@ -70,16 +71,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/WriterName" />
 
-        <Button
-            android:id="@+id/visibility_button"
+        <Switch
+            android:id="@+id/visibility_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-
             android:layout_marginTop="16dp"
-            android:background="@color/buttonGreen"
-            android:text="VISIBLE"
-            android:textColor="@color/whiteColor"
+            android:text="Visibility"
+            android:textSize="18sp"
+            android:checked="true"
+            android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import com.thelegendofawizard.writesomething.ProfilePic
 import com.thelegendofawizard.writesomething.R
 import com.thelegendofawizard.writesomething.databinding.MembersItemBinding
 
@@ -29,7 +30,6 @@ class MembersListAdapter(private val interaction: Interaction? = null) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return MembersListViewHolder(
-
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.members_item,

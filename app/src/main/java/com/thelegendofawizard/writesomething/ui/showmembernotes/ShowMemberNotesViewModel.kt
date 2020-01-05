@@ -8,7 +8,7 @@ import com.thelegendofawizard.writesomething.Repository
 
 class ShowMemberNotesViewModel(val application: Application, val repository: Repository) : ViewModel() {
     //val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
-    val myName = repository.getFirebaseAuthInstance().currentUser?.displayName.toString()
+    val myName = repository.currentUser()?.displayName.toString()
     val notesList = MutableLiveData<List<MyNote>>()
 
     fun getNotes(useremail:String){

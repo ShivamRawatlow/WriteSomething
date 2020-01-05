@@ -10,9 +10,19 @@ class FirebaseDatabaseSource {
         FirebaseFirestore.getInstance()
     }
 
+    fun getDataBaseInstance(): FirebaseFirestore {
+        return database
+    }
+
+    fun getProfilePics(): DocumentReference {
+        return database.collection("ProfilePics").document("Url")
+    }
+
+
     fun getAllMembers(): CollectionReference {
         return database.collection("Members")
     }
+
 
     fun getMember(email: String): DocumentReference {
         return database.collection("Members").document(email)
@@ -24,7 +34,7 @@ class FirebaseDatabaseSource {
     }
 
     fun getAllNotes(): CollectionReference {
-        return return database.collection("Notes")
+         return database.collection("Notes")
     }
 
     fun saveUser(personDetail: PersonDetail): Task<Void> {

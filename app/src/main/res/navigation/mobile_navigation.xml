@@ -8,39 +8,49 @@
     <fragment
         android:id="@+id/membersFragment"
         android:name="com.thelegendofawizard.writesomething.ui.members.MembersFragment"
-        android:label="MembersFragment"
+        android:label="Members"
         tools:layout="@layout/members_fragment">
         <action
             android:id="@+id/action_membersFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_membersFragment_to_myProfileFragment"
-            app:destination="@id/myProfileFragment" />
+            app:destination="@id/myProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_membersFragment_to_showMyNotesFragment"
-            app:destination="@id/showMyNotesFragment" />
+            app:destination="@id/showMyNotesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_membersFragment_to_showMemberNotesFragment"
-            app:destination="@id/showMemberNotesFragment" />
+            app:destination="@id/showMemberNotesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.thelegendofawizard.writesomething.ui.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        android:label="Wall"
+        tools:layout="@layout/home_fragment" />
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.thelegendofawizard.writesomething.ui.myprofile.MyProfileFragment"
-        android:label="MyProfileFragment"
-        tools:layout="@layout/my_profile_fragment" >
+        android:label="MyProfile"
+        tools:layout="@layout/my_profile_fragment">
         <action
             android:id="@+id/action_myProfileFragment_to_showMyNotesFragment"
-            app:destination="@id/showMyNotesFragment" />
+            app:destination="@id/showMyNotesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.thelegendofawizard.writesomething.ui.userprofile.UserProfileFragment"
-        android:label="UserProfileFragment"
+        android:label="UserProfile"
         tools:layout="@layout/user_profile_fragment">
         <argument
             android:name="userEmail"
@@ -48,29 +58,33 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_userProfileFragment_to_showMemberNotesFragment"
-            app:destination="@+id/showMemberNotesFragment" />
+            app:destination="@+id/showMemberNotesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/showMyNotesFragment"
         android:name="com.thelegendofawizard.writesomething.ui.showmynotes.ShowMyNotesFragment"
-        android:label="show_my_notes_fragment"
+        android:label="MyStuff"
         tools:layout="@layout/show_my_notes_fragment">
         <action
             android:id="@+id/action_showMyNotesFragment_to_addNoteFragment"
-            app:destination="@id/addNoteFragment" />
+            app:destination="@id/addNoteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
         android:name="com.thelegendofawizard.writesomething.ui.addnote.AddNoteFragment"
-        android:label="AddNoteFragment"
+        android:label="AddNote"
         tools:layout="@layout/add_note_fragment">
         <argument
             android:name="id"
             app:argType="string" />
         <argument
             android:name="newnote"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <argument
             android:name="name"
             app:argType="string" />
@@ -87,13 +101,13 @@
             app:nullable="true" />
         <argument
             android:name="visibility"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/openNoteFragment"
         android:name="com.thelegendofawizard.writesomething.ui.opennote.OpenNoteFragment"
-        android:label="OpenNoteFragment"
+        android:label="OpenNote"
         tools:layout="@layout/open_note_fragment">
         <argument
             android:name="name"
@@ -110,13 +124,15 @@
     <fragment
         android:id="@+id/showMemberNotesFragment"
         android:name="com.thelegendofawizard.writesomething.ui.showmembernotes.ShowMemberNotesFragment"
-        android:label="show_member_notes_fragment"
-        tools:layout="@layout/show_member_notes_fragment" >
+        android:label="MemberStuff"
+        tools:layout="@layout/show_member_notes_fragment">
         <argument
             android:name="email"
             app:argType="string" />
         <action
             android:id="@+id/action_showMemberNotesFragment_to_openNoteFragment"
-            app:destination="@id/openNoteFragment" />
+            app:destination="@id/openNoteFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 </navigation>

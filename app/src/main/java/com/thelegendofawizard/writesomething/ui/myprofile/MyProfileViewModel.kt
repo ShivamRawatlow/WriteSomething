@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.thelegendofawizard.writesomething.PersonDetail
+import com.thelegendofawizard.writesomething.ProfilePic
 import com.thelegendofawizard.writesomething.Repository
 import com.thelegendofawizard.writesomething.utils.toast
 import kotlinx.coroutines.Dispatchers
@@ -15,18 +16,24 @@ import kotlinx.coroutines.launch
 
 class MyProfileViewModel(val application: Application, val repository: Repository):ViewModel() {
 
-    val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
+    val myEmail = repository.currentUser()?.email.toString()
     var name = MutableLiveData<String>()
-
+    var profilePic:LiveData<ProfilePic> = MutableLiveData<ProfilePic>()
 
         var email = MutableLiveData<String>()
         var about = MutableLiveData<String>()
 
+        var faceName = MutableLiveData<String>()
+        var faceData:LiveData<ByteArray> = MutableLiveData<ByteArray>()
+
         var tempPersonDetail:LiveData<PersonDetail> = MutableLiveData<PersonDetail>()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-             tempPersonDetail = repository.databaseGetMemberByEmail(myEmail)
+
+        if(!myEmail.isBlank()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                tempPersonDetail = repository.databaseGetMemberByEmail(myEmail)
+            }
         }
     }
 

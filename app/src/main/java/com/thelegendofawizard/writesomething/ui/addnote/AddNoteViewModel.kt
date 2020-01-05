@@ -14,16 +14,18 @@ import kotlinx.coroutines.launch
 
 class AddNoteViewModel (val application: Application, val repository: Repository): ViewModel() {
 
-    val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
-    var name = String()
+    val myEmail = repository.currentUser()?.email.toString()
+    val name = MutableLiveData<String>()
     var body = MutableLiveData<String>()
     var title = MutableLiveData<String>()
     var tempPersonDetail: LiveData<PersonDetail> = MutableLiveData<PersonDetail>()
+    var firebaseInstance = repository.getFirebaseDatabaseInstance()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             tempPersonDetail = repository.databaseGetMemberByEmail(myEmail)
         }
+
     }
 
     fun saveNote(note: MyNote){

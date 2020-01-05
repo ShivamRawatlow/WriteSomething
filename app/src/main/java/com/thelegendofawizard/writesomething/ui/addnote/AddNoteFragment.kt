@@ -1,12 +1,13 @@
 package com.thelegendofawizard.writesomething.ui.addnote
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.thelegendofawizard.writesomething.MyNote
 
 import com.thelegendofawizard.writesomething.databinding.AddNoteFragmentBinding
@@ -27,7 +28,6 @@ class AddNoteFragment : Fragment(),KodeinAware {
     private var dbTitle:String? = null
     private var dbId :String? = null
     private var dbEmail:String? = null
-    private lateinit var dbName:String
 
     private var noteVisibility = true
     private var dbVisibility = true
@@ -40,10 +40,15 @@ class AddNoteFragment : Fragment(),KodeinAware {
         val binding = AddNoteFragmentBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this,addNoteViewModelFactory).get(AddNoteViewModel::class.java)
 
+        binding.lifecycleOwner = this
+
             val args = AddNoteFragmentArgs.fromBundle(arguments!!)
             newNote = args.newnote
-            dbName = args.name
-            viewModel.name = args.name
+
+
+        viewModel.tempPersonDetail.observe(this, androidx.lifecycle.Observer {
+            viewModel.name.value = it.name
+        })
         if(!newNote) {
             viewModel.body.value = args.body
             dbBody = args.body
@@ -59,36 +64,16 @@ class AddNoteFragment : Fragment(),KodeinAware {
         binding.lifecycleOwner = this
 
 
-
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(noteVisibility){
-            visibility_button.text = "VISIBLE"
-            visibility_button.setBackgroundColor(Color.rgb(0.0f,0.8f,0.0f))
-        }
-        else{
-            visibility_button.text = "HIDDEN"
-            visibility_button.setBackgroundColor(Color.rgb(0.8f,0.0f,0.0f))
-        }
+        visibility_switch.isChecked = noteVisibility
 
-
-        visibility_button.setOnClickListener {
-            if(noteVisibility){
-                visibility_button.text = "HIDDEN"
-                visibility_button.setBackgroundColor(Color.rgb(0.8f,0.0f,0.0f))
-                noteVisibility = false
-            }
-            else{
-                visibility_button.text = "VISIBLE"
-                visibility_button.setBackgroundColor(Color.rgb(0.0f,0.8f,0.0f))
-                noteVisibility = true
-            }
-
+        visibility_switch.setOnCheckedChangeListener { _, isChecked ->
+            noteVisibility = isChecked
         }
 
     }
@@ -101,7 +86,7 @@ class AddNoteFragment : Fragment(),KodeinAware {
                 val myNote = MyNote(
                     UUID.randomUUID().toString(),
                     viewModel.myEmail,
-                    viewModel.name,
+                    viewModel.name.value!!,
                     viewModel.title.value,
                     viewModel.body.value,
                     noteVisibility
@@ -116,7 +101,7 @@ class AddNoteFragment : Fragment(),KodeinAware {
                 val myNote = MyNote(
                     dbId!!,
                     viewModel.myEmail,
-                    viewModel.name,
+                    viewModel.name.value!!,
                     viewModel.title.value,
                     viewModel.body.value,
                     noteVisibility

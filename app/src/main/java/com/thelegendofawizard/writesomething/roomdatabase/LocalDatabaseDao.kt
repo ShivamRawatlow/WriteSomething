@@ -10,7 +10,6 @@ interface LocalDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(personDetail: PersonDetail)
 
-
     @Delete
     fun delete(personDetail: PersonDetail)
 

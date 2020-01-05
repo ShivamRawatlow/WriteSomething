@@ -24,7 +24,6 @@ class HomeListAdapter(private val interaction: Interaction? = null) :
         override fun areContentsTheSame(oldItem: MyNote, newItem: MyNote): Boolean {
             return oldItem == newItem
         }
-
     }
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 

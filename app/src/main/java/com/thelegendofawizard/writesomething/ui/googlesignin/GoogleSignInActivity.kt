@@ -25,7 +25,7 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
     private val googleSignInViewModelFactory :GoogleSignInViewModelFactory by instance()
-    private lateinit var googleSignInViewModel: GoogleSignInViewModel
+    private lateinit var viewModel: GoogleSignInViewModel
 
     val RC_SIGN_IN: Int = 1
     lateinit var googleSignInClient: GoogleSignInClient
@@ -34,19 +34,25 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_google_sign_in)
 
-        googleSignInViewModel =  ViewModelProvider(this, googleSignInViewModelFactory)
+
+
+
+        viewModel =  ViewModelProvider(this, googleSignInViewModelFactory)
             .get(GoogleSignInViewModel::class.java)
 
-        configureGoogleSignIn()
-        setupUI()
 
-        myclosegooglesignin_imageButton.setOnClickListener{
+        if(viewModel.getCurrentUser()!= null){
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
+
+        configureGoogleSignIn()
+        setupUI()
     }
 
     /* override fun onStart() {
@@ -98,13 +104,13 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        googleSignInViewModel.getFirebaseAuthInstance()
+        viewModel.getFirebaseAuthInstance()
             .signInWithCredential(credential).addOnCompleteListener {
 
                 if (it.isSuccessful) {
                     if(it.result?.additionalUserInfo!!.isNewUser){
 
-                        val user = googleSignInViewModel.getCurrentUser()
+                        val user = viewModel.getCurrentUser()
                         val userEmail = user?.email.toString()
                         val userName = user?.displayName.toString()
                         val person =
@@ -112,7 +118,7 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
                                 userEmail,
                                 userName
                             )
-                        googleSignInViewModel.saveUser(person)
+                        viewModel.saveUser(person)
                     }
 
                     val intent = Intent(applicationContext,MainActivity::class.java)

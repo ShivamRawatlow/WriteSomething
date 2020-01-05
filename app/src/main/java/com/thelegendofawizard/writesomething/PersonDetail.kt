@@ -12,4 +12,6 @@ data class PersonDetail(
     var name:String) {
 
     var about:String = ""
+
+    var faceName:String = ""
 }
