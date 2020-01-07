@@ -29,16 +29,6 @@ class MembersViewModel(val application:Application, val repository: Repository) 
         databaseGetAllMembers()
     }
 
-    @BindingAdapter("imageName")
-    fun loadImage(view: ImageView, faceName:String?) {
-
-        viewModelScope.launch {
-            val byteArray = repository.databaseGetPicByFaceNamec(faceName!!)
-            Glide.with(view)
-                .load(byteArray)
-                .into(view)
-        }
-    }
 
 
     /*fun databaseInsert(personDetail: PersonDetail) {

@@ -51,6 +51,7 @@ class UserProfileFragment : Fragment(),KodeinAware {
             viewModel.name.value = it.name
             viewModel.email.value = it.email
             viewModel.about.value = it.about
+            viewModel.url.value = it.url
         })
     }
 

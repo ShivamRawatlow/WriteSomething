@@ -1,5 +1,6 @@
 package com.thelegendofawizard.writesomething.ui.googlesignin
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.thelegendofawizard.writesomething.MainActivity
 import com.thelegendofawizard.writesomething.PersonDetail
 import com.thelegendofawizard.writesomething.R
+import com.thelegendofawizard.writesomething.Repository
 import com.thelegendofawizard.writesomething.utils.toast
 import kotlinx.android.synthetic.main.activity_google_sign_in.*
 import org.kodein.di.KodeinAware
@@ -37,9 +39,6 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
 
 
         setContentView(R.layout.activity_google_sign_in)
-
-
-
 
         viewModel =  ViewModelProvider(this, googleSignInViewModelFactory)
             .get(GoogleSignInViewModel::class.java)
@@ -113,11 +112,18 @@ class GoogleSignInActivity : AppCompatActivity(), KodeinAware {
                         val user = viewModel.getCurrentUser()
                         val userEmail = user?.email.toString()
                         val userName = user?.displayName.toString()
-                        val person =
-                            PersonDetail(
+                        val person = PersonDetail(
                                 userEmail,
-                                userName
-                            )
+                                userName)
+
+                        //Shared Preference
+                        /*val pref = application.getSharedPreferences(Repository.MY_PREFERENCE_KEY, Context.MODE_PRIVATE)
+                        val editor = pref.edit()
+                        editor.putString(Repository.USER_EMAIL_KEY,userEmail)
+                        editor.putString(Repository.USER_NAME_KEY,userName)
+                        editor.apply()*/
+                        //Shared Preference
+
                         viewModel.saveUser(person)
                     }
 

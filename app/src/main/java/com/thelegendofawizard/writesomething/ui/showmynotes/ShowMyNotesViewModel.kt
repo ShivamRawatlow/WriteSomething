@@ -1,20 +1,24 @@
 package com.thelegendofawizard.writesomething.ui.showmynotes
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.thelegendofawizard.writesomething.MyNote
 import com.thelegendofawizard.writesomething.Repository
 
 class ShowMyNotesViewModel(val application: Application, val repository: Repository) : ViewModel() {
 
 
-    val myEmail = repository.currentUser()?.email.toString()
-    val myName = repository.currentUser()?.displayName.toString()
+    val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
+    val myName = repository.getFirebaseAuthInstance().currentUser?.displayName.toString()
+
     val notesList = MutableLiveData<List<MyNote>>()
 
     init {
-        if (myEmail.isNotEmpty()) {
+        if (!myEmail.isNullOrBlank()) {
             repository.getNotesOfMember(myEmail)
                 .addSnapshotListener { snapshots, firestoreException ->
                     val tempPersonNoteList = mutableListOf<MyNote>()

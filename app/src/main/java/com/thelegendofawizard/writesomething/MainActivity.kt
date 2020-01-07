@@ -17,10 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = this.findViewById(R.id.nav_view)
 
-        /*if(FirebaseAuth.getInstance().currentUser == null)
-        {
 
-        }*/
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -39,21 +36,5 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return navController.navigateUp()
     }
-
-
-
-    /*private fun visibilityNavElements(navController: NavController) {
-
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.homeFragment -> {
-
-                }
-            }
-        }
-    }
-*/
-
 
 }

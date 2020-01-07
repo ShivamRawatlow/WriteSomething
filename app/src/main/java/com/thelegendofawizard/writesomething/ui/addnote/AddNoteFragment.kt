@@ -85,7 +85,7 @@ class AddNoteFragment : Fragment(),KodeinAware {
 
                 val myNote = MyNote(
                     UUID.randomUUID().toString(),
-                    viewModel.myEmail,
+                    viewModel.myEmail!!,
                     viewModel.name.value!!,
                     viewModel.title.value,
                     viewModel.body.value,
@@ -100,7 +100,7 @@ class AddNoteFragment : Fragment(),KodeinAware {
             {
                 val myNote = MyNote(
                     dbId!!,
-                    viewModel.myEmail,
+                    viewModel.myEmail!!,
                     viewModel.name.value!!,
                     viewModel.title.value,
                     viewModel.body.value,

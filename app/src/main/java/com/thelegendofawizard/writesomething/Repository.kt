@@ -1,11 +1,9 @@
 package com.thelegendofawizard.writesomething
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.thelegendofawizard.writesomething.roomdatabase.LocalDatabase
 import com.thelegendofawizard.writesomething.roomdatabase.LocalDatabaseDao
-import com.thelegendofawizard.writesomething.roomdatabase.PicsDatabaseDao
 import com.thelegendofawizard.writesomething.ui.googlesignin.FirebaseAuthSource
 import com.thelegendofawizard.writesomething.utils.toast
 import kotlinx.coroutines.Dispatchers
@@ -16,62 +14,42 @@ import kotlinx.coroutines.launch
 class Repository (
     private val firebaseAuthSource: FirebaseAuthSource,
     private val firebaseDatabaseSource:FirebaseDatabaseSource,
-    private val firebaseStorageSource: FirebaseStorageSource,
     private val database : LocalDatabase,
     private val application: Application)
 {
-    var ListProfilePics: LiveData<List<ProfilePic>> = MutableLiveData<List<ProfilePic>>()
+    val listProfilePics: MutableLiveData<MutableList<ProfilePic>> = MutableLiveData()
+
+    companion object{
+        val USER_NAME_KEY = "com.example.WriteSomething.UserNameKey"
+        val USER_EMAIL_KEY = "com.example.WriteSomething.UserEmailkey"
+        val MY_PREFERENCE_KEY ="com.example.WriteSomething.MyPreferenceKey"
+    }
+
+
 
     init {
         storeMembersLocalDatabase()
-        //storePicsLocalDatabase()
-        GlobalScope.launch(Dispatchers.IO) {
-            ListProfilePics = databaseGetProfilePics()
-        }
-    }
 
-    fun storePicsLocalDatabase(){
-        for (i in 1..7) {
-            val MAX_SIZE = (800 * 600).toLong()
-            firebaseStorageSource.getMyStorageRef().getReference("ProfilePics/face$i.png")
-                .getBytes(MAX_SIZE)
-                    .addOnCompleteListener {
-
-                    if (!it.isSuccessful) {
-                        application.toast("not face$i: ${it.exception}")
-                        return@addOnCompleteListener
-                    }
-                    val byteArray: ByteArray = it.result!!
-                    val profilePic = ProfilePic("face$i",byteArray)
-                        application.toast("face$i")
-                    GlobalScope.launch(Dispatchers.IO) {
-                        databaseInsertProfilePics(profilePic)
-                    }
-
-                }
-        }
-    }
-
-
-    /*fun getProfilePics(){
-        firebaseDatabaseSource.getProfilePics().addSnapshotListener{snapshot, firestoreException ->
+        firebaseDatabaseSource.getProfilePics()
+            .addSnapshotListener { snapshots, firestoreException ->
             if(firestoreException!=null){
                 return@addSnapshotListener
             }
-            for(i in 1..10){
-                val tempProfileFace = ProfilePic("face$i", snapshot?.getString("face$i"))
-                ListProfilePics.value?.add(tempProfileFace)
+                val tempList:MutableList<ProfilePic> = mutableListOf()
+            snapshots?.let {
+                for(doc in snapshots){
+                    val name = doc.getString("name")!!
+                    val faceUrl = doc.getString("faceName")!!
+                    val profilePic = ProfilePic(name,faceUrl)
+                    tempList.add(profilePic)
+                }
+                listProfilePics.value =tempList
             }
-
         }
-
-    }*/
-
+    }
 
 
     fun logout() = firebaseAuthSource.logout()
-
-    fun currentUser() = firebaseAuthSource.currentUser()
 
     fun getFirebaseAuthInstance() = firebaseAuthSource.getFirebaseAuthInstance()
 
@@ -84,18 +62,20 @@ class Repository (
             .addSnapshotListener { snapshots, firestoreException ->
             val tempPersonDetailList  = mutableListOf<PersonDetail>()
             if(firestoreException!=null){
+                application.applicationContext.toast(firestoreException.toString())
                 return@addSnapshotListener
             }
-            snapshots?.let {
-                for(doc in snapshots){
+                for(doc in snapshots!!){
                     val name = doc.getString("name")!!
                     val email = doc.getString("email")!!
                     val about = doc.getString("about")!!
+                    val url = doc.getString("url")!!
                     val personDetail = PersonDetail(email,name)
                     personDetail.about = about
+                    personDetail.url = url
                     tempPersonDetailList.add(personDetail)
                 }
-            }
+
             for (members in tempPersonDetailList){
                 GlobalScope.launch(Dispatchers.IO) {
                     databaseInsert(members)
@@ -142,7 +122,7 @@ class Repository (
 
         firebaseDatabaseSource.updateMemberDetail(email,type,value).addOnCompleteListener {
             if(it.isSuccessful)
-                application.applicationContext.toast("Data updated successfully")
+                application.applicationContext.toast("Data updated successfully $type")
 
             else
                 application.applicationContext.toast("Data update failed: ${it.exception}")
@@ -152,7 +132,6 @@ class Repository (
     fun getMember(email: String) = firebaseDatabaseSource.getMember(email)
 
     private val localDatabaseDao: LocalDatabaseDao = database.localDatabaseDao()
-    private val picsDatabaseDao:PicsDatabaseDao = database.picsDatabaseDao()
 
     suspend fun databaseInsert(personDetail: PersonDetail) = localDatabaseDao.insert(personDetail)
 
@@ -164,10 +143,5 @@ class Repository (
 
     suspend fun databaseGetMemberByEmail(email:String) = localDatabaseDao.getMemberByEmail(email)
 
-    suspend fun databaseInsertProfilePics(pic: ProfilePic) = picsDatabaseDao.insert(pic)
-
-    suspend fun databaseGetProfilePics() = picsDatabaseDao.getAllPics()
-
-    suspend fun databaseGetPicByFaceNamec(faceName:String) = picsDatabaseDao.getPicByFaceName(faceName)
 
 }

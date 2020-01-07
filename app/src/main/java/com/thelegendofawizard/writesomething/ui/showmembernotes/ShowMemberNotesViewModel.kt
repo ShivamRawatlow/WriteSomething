@@ -3,12 +3,14 @@ package com.thelegendofawizard.writesomething.ui.showmembernotes
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.thelegendofawizard.writesomething.MyNote
 import com.thelegendofawizard.writesomething.Repository
 
 class ShowMemberNotesViewModel(val application: Application, val repository: Repository) : ViewModel() {
-    //val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
-    val myName = repository.currentUser()?.displayName.toString()
+
+    val myEmail = repository.getFirebaseAuthInstance().currentUser?.email.toString()
+
     val notesList = MutableLiveData<List<MyNote>>()
 
     fun getNotes(useremail:String){

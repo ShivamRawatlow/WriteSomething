@@ -10,7 +10,7 @@ class FirebaseAuthSource {
 
     fun logout() = firebaseAuth.signOut()
 
-    fun currentUser() = firebaseAuth.currentUser
+   // fun getFirebaseAuth() = firebaseAuth
 
     fun getFirebaseAuthInstance() = firebaseAuth
 

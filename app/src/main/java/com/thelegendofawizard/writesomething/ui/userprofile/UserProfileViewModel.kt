@@ -21,7 +21,7 @@ class UserProfileViewModel(val application: Application, val repository: Reposit
     var name = MutableLiveData<String>()
     var email = MutableLiveData<String>()
     var about = MutableLiveData<String>()
-    //var userEmail :String? = null
+    var url = MutableLiveData<String>()
 
     var tempPersonDetail: LiveData<PersonDetail> = MutableLiveData<PersonDetail>()
 

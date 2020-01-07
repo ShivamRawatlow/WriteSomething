@@ -14,8 +14,8 @@ class FirebaseDatabaseSource {
         return database
     }
 
-    fun getProfilePics(): DocumentReference {
-        return database.collection("ProfilePics").document("Url")
+    fun getProfilePics(): CollectionReference {
+        return database.collection("ProfilePics")
     }
 
 

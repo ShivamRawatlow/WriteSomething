@@ -9,9 +9,9 @@ data class PersonDetail(
     @PrimaryKey(autoGenerate = false)
     val email:String,
 
-    var name:String) {
+    var name:String = "") {
 
     var about:String = ""
 
-    var faceName:String = ""
+    var url:String = ""
 }

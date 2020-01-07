@@ -20,18 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/myprofile_imagebutton"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
-            app:imagebyte="@{myProfileViewModel.faceData}"
+            android:src="@drawable/ic_person_black_24dp"
+            app:imageUrl="@{myProfileViewModel.url}"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="0.136"
+            app:layout_constraintHorizontal_bias="0.103"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_person_black_24dp" />
+             />
 
         <ImageButton
             android:id="@+id/imageView2"

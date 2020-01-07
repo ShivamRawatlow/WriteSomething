@@ -10,12 +10,12 @@ import com.thelegendofawizard.writesomething.PersonDetail
 import com.thelegendofawizard.writesomething.ProfilePic
 
 
-@Database(entities = [PersonDetail::class, ProfilePic::class],version = 1,exportSchema = false)
+@Database(entities = [PersonDetail::class],version = 1,exportSchema = false)
 abstract class LocalDatabase:RoomDatabase()
 {
 
     abstract fun localDatabaseDao(): LocalDatabaseDao
-    abstract fun picsDatabaseDao():PicsDatabaseDao
+    //abstract fun picsDatabaseDao():PicsDatabaseDao
 
     companion object {
         @Volatile private var instance: LocalDatabase? = null
@@ -30,28 +30,4 @@ abstract class LocalDatabase:RoomDatabase()
                 LocalDatabase::class.java, "WriteSomethingDatabase.db")
         .build()
     }
-
-   /* companion object {
-        @Volatile
-        private var INSTANCE: LocalDatabase? = null
-
-        fun getInstance(context: Context): LocalDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    LocalDatabase::class.java,
-                    "word_database"
-                ).fallbackToDestructiveMigration() //if we change the version number
-                    .build()
-
-                INSTANCE = instance
-                return instance
-            }
-        }
-
-    }*/
 }

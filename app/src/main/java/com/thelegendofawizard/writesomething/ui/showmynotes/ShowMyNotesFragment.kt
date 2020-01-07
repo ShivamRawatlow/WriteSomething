@@ -53,7 +53,7 @@ class ShowMyNotesFragment : Fragment(),KodeinAware,ShowMyNotesListAdapter.Intera
 
         addNotes_Button.setOnClickListener {
             val action = ShowMyNotesFragmentDirections.actionShowMyNotesFragmentToAddNoteFragment(
-                "",true,viewModel.myName,viewModel.myEmail,"","",true
+                "",true,viewModel.myName!!,viewModel.myEmail!!,"","",true
             )
             findNavController().navigate(action)
         }

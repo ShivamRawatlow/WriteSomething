@@ -46,7 +46,7 @@ class MembersFragment : Fragment(),KodeinAware,MembersListAdapter.Interaction {
 
             val list = mutableListOf<PersonDetailModel>()
             for(item in it){
-                list.add(PersonDetailModel(item.email,item.name,item.about,item.faceName))
+                list.add(PersonDetailModel(item.email,item.name,item.about,item.url))
             }
             adapter.submitList(list)
         })
