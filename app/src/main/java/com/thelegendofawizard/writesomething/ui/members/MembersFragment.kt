@@ -54,13 +54,11 @@ class MembersFragment : Fragment(),KodeinAware,MembersListAdapter.Interaction {
 
     override fun onItemSelected(position: Int, item: PersonDetailModel) {
 
-        if(membersViewModel.myEmail == item.email)
-        {
+        if(membersViewModel.myEmail == item.email) {
             val action = MembersFragmentDirections.actionMembersFragmentToMyProfileFragment()
             findNavController().navigate(action)
         }
-        else
-        {
+        else {
             val action = MembersFragmentDirections.actionMembersFragmentToUserProfileFragment(item.email)
             findNavController().navigate(action)
         }

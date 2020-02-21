@@ -32,7 +32,7 @@ class AddNoteViewModel (val application: Application, val repository: Repository
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            tempPersonDetail = repository.databaseGetMemberByEmail(myEmail)
+            tempPersonDetail = repository.getMemberByEmail(myEmail)
         }
 
     }

@@ -28,7 +28,7 @@ class UserProfileViewModel(val application: Application, val repository: Reposit
 
     fun getData(userEmail:String) {
         viewModelScope.launch(Dispatchers.IO) {
-            tempPersonDetail = repository.databaseGetMemberByEmail(userEmail)
+            tempPersonDetail = repository.getMemberByEmail(userEmail)
         }
     }
 

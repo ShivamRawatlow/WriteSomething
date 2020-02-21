@@ -36,7 +36,7 @@ class MyProfileViewModel(val application: Application, val repository: Repositor
            // application.applicationContext.toast(myEmail!!)
 
             viewModelScope.launch(Dispatchers.IO){
-                tempPersonDetail = repository.databaseGetMemberByEmail(myEmail!!)
+                tempPersonDetail = repository.getMemberByEmail(myEmail!!)
 
         }
     }
