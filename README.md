@@ -4,7 +4,7 @@ NoteTakingSocialMediaApp
 This is a social media app where you can write something and share with other people.
 This is made on MVVM architecture
 
-Features that ihve used:
+Technical Details:
 
 1. Firebase for online database
 2. Kodein for dependency injection
